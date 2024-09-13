@@ -455,6 +455,30 @@ add primary key(faculty_id)
 alter table faculties
 drop constraint pk_faculties_faculty_id
 
+-- update, delete, returning
+
+select * from employees_usa order by employee_id
+update employees_usa set last_name = 'Bavolio' where employee_id = '1'
+
+-- delete
+
+select * from employees
+delete from employees where employee_id = '10' 
+
+delete from employees_usa -- удаление всех строк
+
+truncate table employees_usa -- тоже удаление всех строк, работает быстрее и без логов
+
+-- returning
+
+select * from employees_usa order by employee_id
+
+insert into employees_usa (employee_id, last_name, first_name)
+values(10, 'Jhon', 'Smith')
+returning *
+
+-- можно использовать также при update
+
 -- FK
 
 alter table faculties
