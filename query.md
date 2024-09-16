@@ -483,3 +483,72 @@ returning *
 
 alter table faculties
 add constraint fk_faculties_dean foreign key(dean_id) references deans(dean_id)
+
+-- условия
+ -- case when
+
+SELECT PRODUCT_NAME,
+	UNIT_PRICE,
+	UNITS_IN_STOCK,
+	CASE
+					WHEN UNITS_IN_STOCK >= 100 THEN 'lots of'
+					WHEN UNITS_IN_STOCK >= 50
+										AND UNITS_IN_STOCK < 100 THEN 'average'
+					WHEN UNITS_IN_STOCK < 50 THEN 'low number'
+					ELSE 'unknown'
+	END AS AMOUNT
+FROM PRODUCTS
+ORDER BY UNITS_IN_STOCK --
+
+SELECT ORDER_ID,
+	ORDER_DATE,
+	CASE
+					WHEN DATE_PART('month',
+
+											ORDER_DATE) BETWEEN 3 AND 5 THEN 'spring'
+					WHEN DATE_PART('month',
+
+											ORDER_DATE) BETWEEN 6 AND 8 THEN 'summer'
+					WHEN DATE_PART('month',
+
+											ORDER_DATE) BETWEEN 9 AND 11 THEN 'autumn'
+					ELSE 'wunter'
+	END AS SEASON
+FROM ORDERS --
+
+SELECT PRODUCT_NAME,
+	UNIT_PRICE,
+	CASE
+					WHEN UNIT_PRICE >= 30 THEN 'Expensive'
+					WHEN UNIT_PRICE < 30 THEN 'inexpensive'
+					ELSE 'Unknown'
+	END AS PRICE_DESCRIPTION
+FROM PRODUCTS -- coalesce, nullif
+
+SELECT *
+FROM ORDERS
+LIMIT 10
+SELECT ORDER_ID,
+	ORDER_DATE,
+	COALESCE(SHIP_REGION,
+
+		'unknown') AS SHIP_REGION
+FROM ORDERS
+LIMIT 10
+SELECT LAST_NAME,
+	FIRST_NAME,
+	COALESCE(REGION,
+
+		'N/A') AS REGION
+FROM EMPLOYEES
+
+SELECT *
+FROM CUSTOMERS
+
+SELECT CONTACT_NAME,
+	COALESCE(NULLIF(CITY,
+
+											''),
+
+		'Unknown') AS CITY
+FROM CUSTOMERS
